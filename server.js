@@ -43,3 +43,16 @@ app.get('/api/v1/projects/:id', (request, response) => {
     })
     .catch(error => response.status(500).json({error}))
 })
+
+app.get('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('id', request.params.id).select()
+    .then(palette => {
+      if(palette.length) {
+        response.status(200).json(palette)
+      } else {
+        response.status(404)
+          .json({error: `Could not find palette with id #${request.params.id}`})
+      }
+    })
+    .catch(error => response.status(500).json({error}))
+})
