@@ -186,3 +186,21 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       }
     })
 })
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const {id} = request.params;
+  database('projects').where('id', id).select()
+    .then(project => {
+      if(project.length) {
+        database('palettes').where('project_id', id).del()
+          .then(() => {
+            database('projects').where('id', id).del()
+              .then(() => response.status(204).json('Project and palettes deleted'))
+              .catch(error => response.status(500).json({error}))
+
+          })
+      } else {
+        response.status(404).json('Project does not exist')
+      }
+    })
+})
