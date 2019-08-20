@@ -169,9 +169,20 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
         response.json('update')
       } else {response.json('dont update')}
     })
-    
-
-    
   
 
+})
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const {id} = request.params;
+  database('palettes').where('id', id).select()
+    .then(palette => {
+      if(palette.length) {
+        database('palettes').where('id', id).del()
+          .then(() => response.status(204).json('Palette removed'))
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(404).json('Palette does not exist')
+      }
+    })
 })
