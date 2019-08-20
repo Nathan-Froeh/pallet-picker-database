@@ -125,10 +125,21 @@ app.post('/api/v1/palettes', (request, response) => {
 app.patch('/api/v1/projects/:id', (request, response) => {
   const name = request.body.name;
   const id = request.params.id;
-  // console.log(name)
-  // console.log(id)
-  database('projects').where('id', id).update({name: name})
-    .then(updated => response.status(201).json(updated))
-    .catch(error => response.status(500).json({error}))
-  // response.status(200).json('stuff')
+  database('projects').where('name', name).select()
+    .then(existingName => {
+      if(!existingName.length) {
+        database('projects').where('id', id).update({name: name})
+          .then(updated => {
+            if(updated) {
+              response.status(201).json(updated)
+            } else {
+              response.status(404).json(`id ${id} does not exist`)
+            }
+          })
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(409).json(`Project ${name} already exists.`)
+      }
+    })
+
 })
