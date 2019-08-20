@@ -51,7 +51,7 @@ app.get('/api/v1/projects/:id', (request, response) => {
       }
     })
     .catch(error => response.status(500).json({error}))
-})
+});
 
 app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
@@ -64,7 +64,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
       }
     })
     .catch(error => response.status(500).json({error}))
-})
+});
 
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
@@ -85,10 +85,7 @@ app.post('/api/v1/projects', (request, response) => {
         response.status(409).json(`${project.name} already exists.`)
       }
     })
-})
-
-
-
+});
 
 app.post('/api/v1/palettes', (request, response) => {
   const palette = request.body;
@@ -123,4 +120,15 @@ app.post('/api/v1/palettes', (request, response) => {
           }
         })
     })
+});
+
+app.patch('/api/v1/projects/:id', (request, response) => {
+  const name = request.body.name;
+  const id = request.params.id;
+  // console.log(name)
+  // console.log(id)
+  database('projects').where('id', id).update({name: name})
+    .then(updated => response.status(201).json(updated))
+    .catch(error => response.status(500).json({error}))
+  // response.status(200).json('stuff')
 })
