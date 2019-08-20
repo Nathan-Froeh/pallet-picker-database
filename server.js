@@ -75,10 +75,20 @@ app.post('/api/v1/projects', (request, response) => {
         .send({error: `Expected format: {name: <String>}. You're missing a ${requiredParameter} property.`})
     }
   }
-  database('projects').insert(project, 'id')
-    .then(project => response.status(201).json({id: project[0]}))
-    .catch(error => response.status(500).json({error}))
+  database('projects').where('name', project.name).select()
+    .then(existingProject => {
+      if(!existingProject.length) {
+        database('projects').insert(project, 'id')
+          .then(project => response.status(201).json({id: project[0]}))
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(409).json(`${project.name} already exists.`)
+      }
+    })
 })
+
+
+
 
 app.post('/api/v1/palettes', (request, response) => {
   const palette = request.body;
