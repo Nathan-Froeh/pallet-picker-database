@@ -141,5 +141,37 @@ app.patch('/api/v1/projects/:id', (request, response) => {
         response.status(409).json(`Project ${name} already exists.`)
       }
     })
+});
+
+
+
+
+app.patch('/api/v1/palettes/:id', (request, response) => {
+  const {name, color_1, color_2, color_3, color_4, color_5, project_id} = request.body;
+  const paletteId = request.params.id;
+  //get all palette names from project_id
+  // if new name is unique then update
+  database('palettes').where('project_id', project_id).select('name', 'id')
+    .then(existingPalettes => {
+      const matchingName = existingPalettes.find(existingPalette => {
+        // console.log(id)
+        // console.log(paletteId)
+        if(existingPalette.name === name && paletteId !== existingPalette.id) {
+          return existingPalette
+        }
+      })
+      return matchingName
+      // console.log(matchingName)
+    })
+    .then(update => {
+      if(!update) {
+        // database('palettes').where('id', id).update({name: name})
+        response.json('update')
+      } else {response.json('dont update')}
+    })
+    
+
+    
+  
 
 })
