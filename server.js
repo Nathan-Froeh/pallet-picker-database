@@ -154,20 +154,18 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('project_id', project_id).select('name', 'id')
     .then(existingPalettes => {
       const matchingName = existingPalettes.find(existingPalette => {
-        // console.log(id)
-        // console.log(paletteId)
-        if(existingPalette.name === name && paletteId !== existingPalette.id) {
+        if(existingPalette.name === name 
+          && Number(paletteId) !== existingPalette.id) {
           return existingPalette
-        }
+        } 
       })
       return matchingName
-      // console.log(matchingName)
     })
     .then(update => {
       if(!update) {
-        // database('palettes').where('id', id).update({name: name})
-        response.json('update')
-      } else {response.json('dont update')}
+        database('palettes').where('id', paletteId).update(request.body)
+          .then(() => response.status(201).json(`Palette ${paletteId} was updated`))
+      } else {response.status(409).json(`${name} already exists.`)}
     })
   
 
