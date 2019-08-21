@@ -25,8 +25,17 @@ app.get('/api/v1/projects', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
+//TEST
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes').select()
+    .then(palettes => response.status(200).json(palettes))
+    .catch(error => response.status(500).json({error}))
+});
+//TEST
+
+app.get('/api/v1/projects/:id/palettes', (request, response) => {
+  const {id} = request.params;
+  database('palettes').where('project_id', id).select()
     .then(palettes => response.status(200).json(palettes))
     .catch(error => response.status(500).json({error}))
 });
@@ -42,7 +51,7 @@ app.get('/api/v1/projects/:id', (request, response) => {
       }
     })
     .catch(error => response.status(500).json({error}))
-})
+});
 
 app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
@@ -55,7 +64,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
       }
     })
     .catch(error => response.status(500).json({error}))
-})
+});
 
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
@@ -66,10 +75,17 @@ app.post('/api/v1/projects', (request, response) => {
         .send({error: `Expected format: {name: <String>}. You're missing a ${requiredParameter} property.`})
     }
   }
-  database('projects').insert(project, 'id')
-    .then(project => response.status(201).json({id: project[0]}))
-    .catch(error => response.status(500).json({error}))
-})
+  database('projects').where('name', project.name).select()
+    .then(existingProject => {
+      if(!existingProject.length) {
+        database('projects').insert(project, 'id')
+          .then(project => response.status(201).json({id: project[0]}))
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(409).json(`${project.name} already exists.`)
+      }
+    })
+});
 
 app.post('/api/v1/palettes', (request, response) => {
   const palette = request.body;
@@ -103,5 +119,86 @@ app.post('/api/v1/palettes', (request, response) => {
             response.status(422).json(`${palette.name} for this project already exists`)
           }
         })
+    })
+});
+
+app.patch('/api/v1/projects/:id', (request, response) => {
+  const name = request.body.name;
+  const id = request.params.id;
+  database('projects').where('name', name).select()
+    .then(existingName => {
+      if(!existingName.length) {
+        database('projects').where('id', id).update({name: name})
+          .then(updated => {
+            if(updated) {
+              response.status(201).json(updated)
+            } else {
+              response.status(404).json(`id ${id} does not exist`)
+            }
+          })
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(409).json(`Project ${name} already exists.`)
+      }
+    })
+});
+
+
+
+
+app.patch('/api/v1/palettes/:id', (request, response) => {
+  const {name, color_1, color_2, color_3, color_4, color_5, project_id} = request.body;
+  const paletteId = request.params.id;
+  //get all palette names from project_id
+  // if new name is unique then update
+  database('palettes').where('project_id', project_id).select('name', 'id')
+    .then(existingPalettes => {
+      const matchingName = existingPalettes.find(existingPalette => {
+        if(existingPalette.name === name 
+          && Number(paletteId) !== existingPalette.id) {
+          return existingPalette
+        } 
+      })
+      return matchingName
+    })
+    .then(update => {
+      if(!update) {
+        database('palettes').where('id', paletteId).update(request.body)
+          .then(() => response.status(201).json(`Palette ${paletteId} was updated`))
+      } else {response.status(409).json(`${name} already exists.`)}
+    })
+  
+
+})
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const {id} = request.params;
+  database('palettes').where('id', id).select()
+    .then(palette => {
+      if(palette.length) {
+        database('palettes').where('id', id).del()
+          .then(() => response.status(204).json('Palette removed'))
+          .catch(error => response.status(500).json({error}))
+      } else {
+        response.status(404).json('Palette does not exist')
+      }
+    })
+})
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const {id} = request.params;
+  database('projects').where('id', id).select()
+    .then(project => {
+      if(project.length) {
+        database('palettes').where('project_id', id).del()
+          .then(() => {
+            database('projects').where('id', id).del()
+              .then(() => response.status(204).json('Project and palettes deleted'))
+              .catch(error => response.status(500).json({error}))
+
+          })
+      } else {
+        response.status(404).json('Project does not exist')
+      }
     })
 })
