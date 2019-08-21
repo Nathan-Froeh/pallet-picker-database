@@ -13,8 +13,4 @@ module.exports = {
     },
     useNullAsDefault: true
   },
-  
-
-  
-
 };
