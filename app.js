@@ -1,9 +1,17 @@
-const app = require('./app')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+const querystring = require('querystring');
 
-app.set('port', process.env.PORT || 3001);
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+app.locals.title = 'Palette Picker Database';
 
-app.listen(app.get('port'), () => {
-  console.log(`Running on port ${app.get('port')}`)
+app.get('/', (request, response) => {
 });
 
 app.get('/api/v1/projects', (request, response) => {
@@ -188,6 +196,20 @@ app.delete('/api/v1/projects/:id', (request, response) => {
         response.status(404).json('Project does not exist')
       }
     })
+})
+
+app.get('/api/v1/specificPalette', (request, response) => {
+  const color = request.query.hexcode
+  console.log(color)
+  database('palettes').where('color_1',color).orWhere('color_2',color).orWhere('color_3',color).orWhere('color_4',color).orWhere('color_5',color).select()
+    .then(palettes => {
+      if(response.length){
+        response.status(200).json(palettes)
+      } else {
+        response.status(404).json('Hexcolor not found')
+      }
+    })
+    .catch(error => response.status(500).json({error}))
 })
 
 module.exports = app;
