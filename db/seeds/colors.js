@@ -14,20 +14,20 @@ exports.seed = function(knex) {
             {
               project_id: project[0],
               name: 'palette 1',
-              color_1: '31393C',
-              color_2: '2176FF',
-              color_3: '33A1FD',
-              color_4: 'FDCA40',
-              color_5: 'F79824',
+              color_1: '#31393C',
+              color_2: '#2176FF',
+              color_3: '#33A1FD',
+              color_4: '#FDCA40',
+              color_5: '#F79824',
             },
             {
               project_id: project[0],
               name: 'palette 2',
-              color_1: '31393E',
-              color_2: '2176FY',
-              color_3: '33A1FL',
-              color_4: 'FDCA48',
-              color_5: 'F79820',
+              color_1: '#31393E',
+              color_2: '#2176FY',
+              color_3: '#33A1FL',
+              color_4: '#FDCA48',
+              color_5: '#F79820',
             }
           ])
         })
