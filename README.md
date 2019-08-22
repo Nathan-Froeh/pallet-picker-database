@@ -45,11 +45,11 @@ all other values must be a string
 {
 "project_id": 6,
 "name": "palette 1",
-"color_1": "31393C",
-"color_2": "2176FF",
-"color_3": "33A1FD",
-"color_4": "FDCA40",
-"color_5": "F79824",
+"color_1": "#31393C",
+"color_2": "#2176FF",
+"color_3": "#33A1FD",
+"color_4": "#FDCA40",
+"color_5": "#F79824",
 "project_name": "test 2"
 }
 ```
@@ -75,11 +75,11 @@ name and all five colors must be a string
 {
 "project_id": 5,
 "name": "palette 1",
-"color_1": "31393C",
-"color_2": "2176FF",
-"color_3": "33A1FD",
-"color_4": "FDCA40",
-"color_5": "F79824"
+"color_1": "#31393C",
+"color_2": "#2176FF",
+"color_3": "#33A1FD",
+"color_4": "#FDCA40",
+"color_5": "#F79824"
 }
 ```
 
