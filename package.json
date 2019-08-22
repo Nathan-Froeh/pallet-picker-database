@@ -18,5 +18,8 @@
     "knex": "^0.19.2",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "supertest": "^4.0.2"
   }
 }
