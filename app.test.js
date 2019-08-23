@@ -22,12 +22,26 @@ describe('API', () => {
 
   describe('GET /api/v1/projects/:id/palettes', () => {
     it('HAPPY PATH: should return a status of 200 and all the palettes from a single project', async () => {
-      const expectedPalette = await database('palettes').first();
-      const id = expectedPalette.project_id;
-      const response = await request(app).get(`/api/v1/projects/${id}/palettes`)
-      const result = response.body[0]
+      const expectedId = await database('projects').first('id').then(object => object.id)
+      const expectedPalette = await database('palettes').first().where({ project_id: expectedId }).select();
+      const response = await request(app).get(`/api/v1/projects/${expectedId}/palettes`)
+      const result = response.body
+      console.log(expectedPalette)
       expect(response.status).toBe(200);
-      expect(result[0]).toEqual(expectedPalette[0])
+      expect(result[0].name).toEqual(expectedPalette.name)
     })
   })
+
+  // describe('GET /api/v1/palettes/:id', () => {
+  //   it('HAPPY PATH: should return a status of 200 and a single pallete from all the palettes', async () => {
+  //     const expectedId = await database('palettes').first('id').then(object => object.id)
+  //     const expectedPalette = await database('palettes').first();
+  //     console.log(expectedPalette)
+  //     // const id = 425;
+  //     const response = await request(app).get(`/api/v1/palettes/${id}`);
+  //     const result = response.body;
+  //     expect(response.status).toBe(200);
+  //     expect(result).toEqual(expectedPalette)
+  //   })
+  // })
 })
