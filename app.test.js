@@ -21,7 +21,7 @@ describe('API', () => {
   })
 
   describe('GET /api/v1/projects/:id/palettes', () => {
-    it('HAPPY PATH: should return a status of 200 and a single palette from a single project', async () => {
+    it('HAPPY PATH: should return a status of 200 and all the palettes from a single project', async () => {
       const expectedPalette = await database('palettes').first();
       const id = expectedPalette.project_id;
       const response = await request(app).get(`/api/v1/projects/${id}/palettes`)
