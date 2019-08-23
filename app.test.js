@@ -26,7 +26,6 @@ describe('API', () => {
       const expectedPalette = await database('palettes').first().where({ project_id: expectedId }).select();
       const response = await request(app).get(`/api/v1/projects/${expectedId}/palettes`)
       const result = response.body
-      console.log(expectedPalette)
       expect(response.status).toBe(200);
       expect(result[0].name).toEqual(expectedPalette.name)
     })
@@ -36,11 +35,17 @@ describe('API', () => {
     it('HAPPY PATH: should return a status of 200 and a single pallete from all the palettes', async () => {
       const expectedId = await database('palettes').first('id').then(object => object.id)
       const expectedPalette = await database('palettes').first();
-      console.log(expectedId)
       const response = await request(app).get(`/api/v1/palettes/${expectedId}`);
       const result = response.body;
       expect(response.status).toBe(200);
       expect(result[0].name).toEqual(expectedPalette.name)
+    })
+
+    it('SAD PAth: should return a status of 404 if an id is sent in that doesnt exist', async () => {
+      const invalidId = -1;
+      const response = await request(app).get(`/api/v1/palettes/${invalidId}`);
+      expect(response.status).toBe(404)
+      expect(response.body.error).toEqual(`Could not find palette with id #${invalidId}`)
     })
   })
 })
