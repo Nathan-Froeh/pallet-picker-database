@@ -32,16 +32,15 @@ describe('API', () => {
     })
   })
 
-  // describe('GET /api/v1/palettes/:id', () => {
-  //   it('HAPPY PATH: should return a status of 200 and a single pallete from all the palettes', async () => {
-  //     const expectedId = await database('palettes').first('id').then(object => object.id)
-  //     const expectedPalette = await database('palettes').first();
-  //     console.log(expectedPalette)
-  //     // const id = 425;
-  //     const response = await request(app).get(`/api/v1/palettes/${id}`);
-  //     const result = response.body;
-  //     expect(response.status).toBe(200);
-  //     expect(result).toEqual(expectedPalette)
-  //   })
-  // })
+  describe('GET /api/v1/palettes/:id', () => {
+    it('HAPPY PATH: should return a status of 200 and a single pallete from all the palettes', async () => {
+      const expectedId = await database('palettes').first('id').then(object => object.id)
+      const expectedPalette = await database('palettes').first();
+      console.log(expectedId)
+      const response = await request(app).get(`/api/v1/palettes/${expectedId}`);
+      const result = response.body;
+      expect(response.status).toBe(200);
+      expect(result[0].name).toEqual(expectedPalette.name)
+    })
+  })
 })
