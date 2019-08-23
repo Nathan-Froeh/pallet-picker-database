@@ -19,4 +19,15 @@ describe('API', () => {
       expect(projects[0].name).toEqual('test 1')
     })
   })
+
+  describe('GET /api/v1/projects/:id/palettes', () => {
+    it('HAPPY PATH: should return a status of 200 and a single palette from a single project', async () => {
+      const expectedPalette = await database('palettes').first();
+      const id = expectedPalette.project_id;
+      const response = await request(app).get(`/api/v1/projects/${id}/palettes`)
+      const result = response.body[0]
+      expect(response.status).toBe(200);
+      expect(result[0]).toEqual(expectedPalette[0])
+    })
+  })
 })
