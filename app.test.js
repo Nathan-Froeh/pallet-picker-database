@@ -190,4 +190,15 @@ describe('API', () => {
       expect(response.status).toBe(404)
     })
   })
+
+  describe('GET /api/v1/specificPalette', () => {
+    it('HAPPY PATH: should return 200 status and a palette', async () => {
+      const palette = await database('palettes').select()
+        .then(palette => palette[0])
+      console.log(palette.color_1.substring(1))
+      const response = await request(app).get(`/api/v1/specificPalette?hexcode=${palette.color_1.substring(1)}`)
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual(palette)
+    })
+  })
 })

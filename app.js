@@ -169,7 +169,7 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
     })
 })
 
-//Nathan
+//done
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const {id} = request.params;
   database('palettes').where('id', id).select()
