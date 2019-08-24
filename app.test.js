@@ -82,7 +82,7 @@ describe('API', () => {
       expect(result[0].name).toEqual(expectedPalette.name)
     })
 
-    it('SAD PAth: should return a status of 404 if an id is sent in that doesnt exist', async () => {
+    it('SAD PATH: should return a status of 404 if an id is sent in that doesnt exist', async () => {
       const invalidId = -1;
       const response = await request(app).get(`/api/v1/palettes/${invalidId}`);
       expect(response.status).toBe(404)
@@ -108,19 +108,23 @@ describe('API', () => {
       expect(response.status).toBe(409);
       expect(response.body).toEqual(errorMessage);
     })
-
   })
 
-  // describe('POST /api/v1/palettes', () => {
-  //   it('HAPPY PATH: should post a new palette to the database', async () => {
-  //     const newPalette = {name: 'new pal', color_1: '#FFFFFF', color_2: '#FFFFFF', color_3: '#FFFFFF', color_4: '#FFFFFF', color_5: '#FFFFFF', project_name: 'new proj'}
-  //     const response = await request(app).post('/api/v1/palettes').send(newPalette)
-  //     const pals = await database('palettes').where({ id: response.body.id });
-  //     const newPalettes = pals[0]
-  //     expect(response.status).toBe(200)
-  //     expect(newPalettes.name).toEqual(newPalette.name)
-  //   })
-  // })
+  describe('POST /api/v1/palettes', () => {
+    it('HAPPY PATH: should post a new palette to the database', async () => {
+      const newPalette = {name: 'new pal', color_1: '#FFFFFF', color_2: '#FFFFFF', color_3: '#FFFFFF', color_4: '#FFFFFF', color_5: '#FFFFFF', project_name: 'test 1'}
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const pals = await database('palettes').where({ id: response.body.id });
+      const newPalettes = pals[0]
+      expect(response.status).toBe(201)
+      expect(newPalettes.name).toEqual(newPalette.name)
+    })
+    it('SAD PATH: Should return a 422 status if the palette already exists', async () => {
+      const newPalette = {name: 'palette 1', color_1: '#31393C', color_2: '#2176FF', color_3: '#33A1FD', color_4: 'FDCA40', color_5: '#F79824', project_name: 'test 1'}
+      const response = await request(app).post(`/api/v1/palettes`).send(newPalette);
+      expect(response.status).toBe(422)
+    })
+  })
 
   describe('PATCH /api/v1/projects/:id', () => {
     it('HAPPY PATH: should return 201 status and updated object', async () => {
@@ -151,16 +155,48 @@ describe('API', () => {
     })
   })
 
-  // describe('PATCH /api/v1/palettes/:id', () => {
-  //   it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
-  //     const updatePalette = {project_id: 1, name: '#ASDLKJ'};
-  //     const expectedId = await database('palettes').first('id');
-  //     const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
-  //     const newPalette = await database('palettes').where({ id: expectedId })
-  //     expect(response.status).toBe(201)
-  //     expect(newPalette[0].color_one).toEqual(updatePalette.color_1)
-  //   })
-  // })
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
+      const expectedProj = await database('projects').first('id').then(object => object.id)
+
+      const updatePalette = {
+        project_id: expectedProj,
+        name: 'new pallete 1',
+        color_1: '#31393Z',
+        color_2: '2176FF',
+        color_3: '33A1FD',
+        color_4: 'FDCA40',
+        color_5: '31393C'
+      };
+      const expectedId = await database('palettes').first('id').then(object => object.id);
+      const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
+      const newPalette = await database('palettes').where({ id: expectedId })
+      expect(response.status).toBe(201)
+      expect(newPalette[0].name).toEqual(updatePalette.name)
+    })
+    it.skip('SAD PATH: should send a 409 status code if a name already exists', async () => {
+      const expectedProj = await database('projects').first('id').then(object => object.id)
+      const expectedId = await database('palettes').first('id').then(object => object.id);
+      const firstresponse = await request(app).get(`/api/v1/palettes`);
+      console.log(firstresponse.body)
+      const updatePalette = {
+        project_id: expectedProj,
+        name: 'pallete 2',
+        color_1: '#31393E',
+        color_2: '#2176FY',
+        color_3: '#33A1FL',
+        color_4: '#FDCA48',
+        color_5: '#F79820',
+      };
+      const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
+      const newresponse = await request(app).get(`/api/v1/palettes`);
+      console.log(updatePalette.project_id)
+      console.log(expectedId)
+      console.log(firstresponse.body)
+      console.log(newresponse.body)
+      expect(response.status).toBe(409)
+    })
+  })
 
   describe('DELETE /api/v1/palettes/:id', () => {
     it('HAPPY PATH: should return 204 status', async () => {
@@ -184,7 +220,7 @@ describe('API', () => {
       const response = await request(app).delete(`/api/v1/projects/${expectedId}`)
       expect(response.status).toBe(204)
     })
-    
+
     it('SAD PATH: should return a 404 if a request id is bad', async () => {
       const response = await request(app).delete('/api/v1/projects/-2')
       expect(response.status).toBe(404)
