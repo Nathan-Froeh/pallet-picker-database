@@ -49,16 +49,16 @@ describe('API', () => {
     })
   })
 
-  // describe('POST /api/v1/palettes', () => {
-  //   it('HAPPY PATH: should post a new palette to the database', async () => {
-  //     const newPalette = {name: 'new pal', color_1: '#FFFFFF', color_2: '#FFFFFF', color_3: '#FFFFFF', color_4: '#FFFFFF', color_5: '#FFFFFF', project_name: 'new proj'}
-  //     const response = await request(app).post('/api/v1/palettes').send(newPalette)
-  //     const pals = await database('palettes').where({ id: response.body.id });
-  //     const newPalettes = pals[0]
-  //     expect(response.status).toBe(200)
-  //     expect(newPalettes.name).toEqual(newPalette.name)
-  //   })
-  // })
+  describe('POST /api/v1/palettes', () => {
+    it('HAPPY PATH: should post a new palette to the database', async () => {
+      const newPalette = {name: 'new pal', color_1: '#FFFFFF', color_2: '#FFFFFF', color_3: '#FFFFFF', color_4: '#FFFFFF', color_5: '#FFFFFF', project_name: 'test 1'}
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const pals = await database('palettes').where({ id: response.body.id });
+      const newPalettes = pals[0]
+      expect(response.status).toBe(201)
+      expect(newPalettes.name).toEqual(newPalette.name)
+    })
+  })
 
   // describe('PATCH /api/v1/palettes/:id', () => {
   //   it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
@@ -77,7 +77,7 @@ describe('API', () => {
       const response = await request(app).delete(`/api/v1/projects/${expectedId}`)
       expect(response.status).toBe(204)
     })
-    
+
     it('SAD PATH: should return a 404 if a request id is bad', async () => {
       const response = await request(app).delete('/api/v1/projects/-2')
       expect(response.status).toBe(404)
