@@ -122,7 +122,7 @@ app.post('/api/v1/palettes', (request, response) => {
     })
 });
 
-//Nathan
+//done
 app.patch('/api/v1/projects/:id', (request, response) => {
   const name = request.body.name;
   const id = request.params.id;

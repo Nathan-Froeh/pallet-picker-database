@@ -162,6 +162,17 @@ describe('API', () => {
   //   })
   // })
 
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('HAPPY PATH: should return 204 status', async () => {
+      const paletteId = await database('palettes').select()
+        .then(palette => palette[0].id)
+      const response = await request(app).delete(`/api/v1/palettes/${paletteId}`)
+      expect(response.status).toBe(204)
+    })
+
+    
+  })
+
   describe('DELETE /api/v1/projects/:id', () => {
     it('HAPPY PATH: should return a status of 204 when a projects is deleted', async () => {
       const expectedId = await database('projects').first('id').then(object => object.id);
