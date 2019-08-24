@@ -140,6 +140,15 @@ describe('API', () => {
       expect(response.status).toBe(404)
       expect(response.body).toEqual(`id ${expectedId} does not exist`)
     })
+
+    it('SAD PATH: should return 409 status and project exists message', async () => {
+      const updatedProject = {name: 'test 1'}
+      const expectedId = await database('projects').select('id')
+        .then(project => project[0].id + 1)
+      const response = await request(app).patch(`/api/v1/projects/${expectedId}`).send(updatedProject)
+      expect(response.status).toBe(409)
+      expect(response.body).toEqual("Project test 1 already exists.")
+    })
   })
 
   // describe('PATCH /api/v1/palettes/:id', () => {
