@@ -122,6 +122,17 @@ describe('API', () => {
   //   })
   // })
 
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('HAPPY PATH: should return 201 status and updated object', async () => {
+      const updatedProject = {name: 'Updated test 1'}
+      const expectedId = await database('projects').select('id')
+        .then(project => project[0].id)
+      const response = await request(app).patch(`/api/v1/projects/${expectedId}`).send(updatedProject)
+      expect(response.status).toBe(201)
+      expect(response.body).toEqual(1)
+    })
+  })
+
   // describe('PATCH /api/v1/palettes/:id', () => {
   //   it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
   //     const updatePalette = {project_id: 1, name: '#ASDLKJ'};

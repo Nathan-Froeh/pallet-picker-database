@@ -64,7 +64,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//Nathan
+//done
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
   for(let requiredParameter of ['name']) {
@@ -131,6 +131,7 @@ app.patch('/api/v1/projects/:id', (request, response) => {
       if(!existingName.length) {
         database('projects').where('id', id).update({name: name})
           .then(updated => {
+            console.log('updated', updated)
             if(updated) {
               response.status(201).json(updated)
             } else {
