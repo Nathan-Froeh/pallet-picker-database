@@ -58,6 +58,11 @@ describe('API', () => {
       expect(response.status).toBe(201)
       expect(newPalettes.name).toEqual(newPalette.name)
     })
+    it('SAD PATH: Should return a 422 status if the palette already exists', async () => {
+      const newPalette = {name: 'palette 1', color_1: '#31393C', color_2: '#2176FF', color_3: '#33A1FD', color_4: 'FDCA40', color_5: '#F79824', project_name: 'test 1'}
+      const response = await request(app).post(`/api/v1/palettes`).send(newPalette);
+      expect(response.status).toBe(422)
+    })
   })
 
   // describe('PATCH /api/v1/palettes/:id', () => {
