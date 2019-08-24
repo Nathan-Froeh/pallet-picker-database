@@ -247,5 +247,13 @@ describe('API', () => {
       expect(response.status).toBe(200)
       expect(result).toEqual(expected)
     })
+    it('SAD PATH: should return 404 status and hexcolor not found error', async () => {
+      const palette = await database('palettes').select()
+        .then(palette => palette[0])
+      const response = await request(app).get(`/api/v1/specificPalette?hexcode=${palette.color_1.substring(1)}`) 
+      const expected = 'Hexcolor not found'
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual(expected)
+    })
   })
 })
