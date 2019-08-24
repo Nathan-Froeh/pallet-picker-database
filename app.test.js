@@ -41,7 +41,7 @@ describe('API', () => {
       expect(result[0].name).toEqual(expectedPalette.name)
     })
 
-    it('SAD PAth: should return a status of 404 if an id is sent in that doesnt exist', async () => {
+    it('SAD PATH: should return a status of 404 if an id is sent in that doesnt exist', async () => {
       const invalidId = -1;
       const response = await request(app).get(`/api/v1/palettes/${invalidId}`);
       expect(response.status).toBe(404)
@@ -83,6 +83,28 @@ describe('API', () => {
       const newPalette = await database('palettes').where({ id: expectedId })
       expect(response.status).toBe(201)
       expect(newPalette[0].name).toEqual(updatePalette.name)
+    })
+    it.skip('SAD PATH: should send a 409 status code if a name already exists', async () => {
+      const expectedProj = await database('projects').first('id').then(object => object.id)
+      const expectedId = await database('palettes').first('id').then(object => object.id);
+      const firstresponse = await request(app).get(`/api/v1/palettes`);
+      console.log(firstresponse.body)
+      const updatePalette = {
+        project_id: expectedProj,
+        name: 'pallete 2',
+        color_1: '#31393E',
+        color_2: '#2176FY',
+        color_3: '#33A1FL',
+        color_4: '#FDCA48',
+        color_5: '#F79820',
+      };
+      const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
+      const newresponse = await request(app).get(`/api/v1/palettes`);
+      console.log(updatePalette.project_id)
+      console.log(expectedId)
+      console.log(firstresponse.body)
+      console.log(newresponse.body)
+      expect(response.status).toBe(409)
     })
   })
 
