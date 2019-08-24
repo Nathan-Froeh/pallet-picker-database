@@ -49,7 +49,6 @@ describe('API', () => {
     it('HAPPY PATH: should return status 200 and specific project', async () => {
       const expectedProject = await database('projects').select('name', 'id')
         .then(projects => projects[0])
-        console.log(expectedProject)
       const response = await request(app)
         .get(`/api/v1/projects/${expectedProject.id}`)
       const result = response.body.map(project => (
@@ -59,6 +58,17 @@ describe('API', () => {
         }))
       expect(response.status).toBe(200)
       expect(result[0]).toEqual(expectedProject)
+    })
+
+    it('SAD PATH: should return status 404 and error message', async () => {
+      const expectedId = await database('projects').select('id')
+        .then(project => project[0])
+      const expectedResponse = {error: `Could not find project with id #${expectedId.id - 1}`}
+      const response = await request(app)
+        .get(`/api/v1/projects/${expectedId.id - 1}`)
+      const result = response.body
+      expect(response.status).toBe(404)
+      expect(result).toEqual(expectedResponse)
     })
   })
 
