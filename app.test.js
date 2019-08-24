@@ -45,6 +45,23 @@ describe('API', () => {
     })
   })
 
+  describe('GET /api/v1/projects/:id', () => {
+    it('HAPPY PATH: should return status 200 and specific project', async () => {
+      const expectedProject = await database('projects').select('name', 'id')
+        .then(projects => projects[0])
+        console.log(expectedProject)
+      const response = await request(app)
+        .get(`/api/v1/projects/${expectedProject.id}`)
+      const result = response.body.map(project => (
+        {
+          name: project.name,
+          id: project.id
+        }))
+      expect(response.status).toBe(200)
+      expect(result[0]).toEqual(expectedProject)
+    })
+  })
+
   describe('GET /api/v1/palettes/:id', () => {
     it('HAPPY PATH: should return a status of 200 and a single pallete from all the palettes', async () => {
       const expectedId = await database('palettes').first('id').then(object => object.id)
