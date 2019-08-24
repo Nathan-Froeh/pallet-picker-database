@@ -72,10 +72,14 @@ describe('API', () => {
   // })
 
   describe('DELETE /api/v1/projects/:id', () => {
-    it('should return a status of 204 when a projects is deleted', async () => {
+    it('HAPPY PATH: should return a status of 204 when a projects is deleted', async () => {
       const expectedId = await database('projects').first('id').then(object => object.id);
       const response = await request(app).delete(`/api/v1/projects/${expectedId}`)
       expect(response.status).toBe(204)
     })
+    it('SAD PATH: should return a 404 if a request id is bad', async () => {
+      const response = await request(app).delete('/api/v1/projects/-2')
+      expect(response.status).toBe(404)
+  })
   })
 })
