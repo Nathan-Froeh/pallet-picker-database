@@ -65,16 +65,26 @@ describe('API', () => {
     })
   })
 
-  // describe('PATCH /api/v1/palettes/:id', () => {
-  //   it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
-  //     const updatePalette = {project_id: 1, name: '#ASDLKJ'};
-  //     const expectedId = await database('palettes').first('id');
-  //     const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
-  //     const newPalette = await database('palettes').where({ id: expectedId })
-  //     expect(response.status).toBe(201)
-  //     expect(newPalette[0].color_one).toEqual(updatePalette.color_1)
-  //   })
-  // })
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('HAPPY PATH: should return a status of 201 and update a specific palette', async () => {
+      const expectedProj = await database('projects').first('id').then(object => object.id)
+
+      const updatePalette = {
+        project_id: expectedProj,
+        name: 'new pallete 1',
+        color_1: '#31393Z',
+        color_2: '2176FF',
+        color_3: '33A1FD',
+        color_4: 'FDCA40',
+        color_5: '31393C'
+      };
+      const expectedId = await database('palettes').first('id').then(object => object.id);
+      const response = await request(app).patch(`/api/v1/palettes/${expectedId}`).send(updatePalette);
+      const newPalette = await database('palettes').where({ id: expectedId })
+      expect(response.status).toBe(201)
+      expect(newPalette[0].name).toEqual(updatePalette.name)
+    })
+  })
 
   describe('DELETE /api/v1/projects/:id', () => {
     it('HAPPY PATH: should return a status of 204 when a projects is deleted', async () => {
