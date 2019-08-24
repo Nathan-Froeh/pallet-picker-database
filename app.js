@@ -206,10 +206,9 @@ app.delete('/api/v1/projects/:id', (request, response) => {
 //Nathan
 app.get('/api/v1/specificPalette', (request, response) => {
   const color = request.query.hexcode
-  console.log(color)
   database('palettes').where('color_1',color).orWhere('color_2',color).orWhere('color_3',color).orWhere('color_4',color).orWhere('color_5',color).select()
     .then(palettes => {
-      if(response.length){
+      if(palettes.length){
         response.status(200).json(palettes)
       } else {
         response.status(404).json('Hexcolor not found')

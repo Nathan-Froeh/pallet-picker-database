@@ -228,13 +228,24 @@ describe('API', () => {
   })
 
   describe('GET /api/v1/specificPalette', () => {
-    it.skip('HAPPY PATH: should return 200 status and a palette', async () => {
+    it('HAPPY PATH: should return 200 status and a palette', async () => {
       const palette = await database('palettes').select()
         .then(palette => palette[0])
-      console.log(palette.color_1)
-      const response = await request(app).get(`/api/v1/specificPalette?hexcode=%23${palette.color_1}`)
+      const response = await request(app).get(`/api/v1/specificPalette?hexcode=%23${palette.color_1.substring(1)}`)
+      const expected = [{
+        name: 'palette 1',
+        id: palette.id,
+        color_1: palette.color_1
+      }]
+      const result = response.body.map(palette => (
+        {
+          name:palette.name,
+          id: palette.id,
+          color_1: palette.color_1
+        }
+      ))
       expect(response.status).toBe(200)
-      expect(response.body).toEqual(palette)
+      expect(result).toEqual(expected)
     })
   })
 })
