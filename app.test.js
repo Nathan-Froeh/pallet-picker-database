@@ -91,7 +91,7 @@ describe('API', () => {
   })
 
   describe('POST /api/v1/projects', () => {
-    it('HAPPY PATH', async () => {
+    it('HAPPY PATH should return 201 status and object with new id', async () => {
       const expectedId = await database('projects').select('id')
         .then(project => project[0].id + 1)
       const expectedResponse = {id: expectedId}
@@ -99,6 +99,14 @@ describe('API', () => {
       const response = await request(app).post('/api/v1/projects').send(newProject)
       expect(response.status).toBe(201)
       expect(response.body).toEqual(expectedResponse)
+    })
+
+    it('SAD PATH: should return 409 status and project exists message', async () => {
+      const newProject = {name: 'test 1'}
+      const response = await request(app).post('/api/v1/projects').send(newProject)
+      const errorMessage = 'test 1 already exists.';
+      expect(response.status).toBe(409);
+      expect(response.body).toEqual(errorMessage);
     })
 
   })
