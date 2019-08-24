@@ -90,6 +90,19 @@ describe('API', () => {
     })
   })
 
+  describe('POST /api/v1/projects', () => {
+    it('HAPPY PATH', async () => {
+      const expectedId = await database('projects').select('id')
+        .then(project => project[0].id + 1)
+      const expectedResponse = {id: expectedId}
+      const newProject = {name: 'The Bat Cave'}
+      const response = await request(app).post('/api/v1/projects').send(newProject)
+      expect(response.status).toBe(201)
+      expect(response.body).toEqual(expectedResponse)
+    })
+
+  })
+
   // describe('POST /api/v1/palettes', () => {
   //   it('HAPPY PATH: should post a new palette to the database', async () => {
   //     const newPalette = {name: 'new pal', color_1: '#FFFFFF', color_2: '#FFFFFF', color_3: '#FFFFFF', color_4: '#FFFFFF', color_5: '#FFFFFF', project_name: 'new proj'}

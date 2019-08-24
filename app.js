@@ -36,7 +36,7 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//Nathan
+//done
 app.get('/api/v1/projects/:id', (request, response) => {
   database('projects').where('id', request.params.id).select()
     .then(project => {
