@@ -20,7 +20,7 @@ app.get('/api/v1/projects', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//TEST //Nathan
+//TEST //done
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes').select()
     .then(palettes => response.status(200).json(palettes))
@@ -36,7 +36,7 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//Nathan
+//done
 app.get('/api/v1/projects/:id', (request, response) => {
   database('projects').where('id', request.params.id).select()
     .then(project => {
@@ -64,7 +64,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//Nathan
+//done
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
   for(let requiredParameter of ['name']) {
@@ -122,7 +122,7 @@ app.post('/api/v1/palettes', (request, response) => {
     })
 });
 
-//Nathan
+//done
 app.patch('/api/v1/projects/:id', (request, response) => {
   const name = request.body.name;
   const id = request.params.id;
@@ -131,6 +131,7 @@ app.patch('/api/v1/projects/:id', (request, response) => {
       if(!existingName.length) {
         database('projects').where('id', id).update({name: name})
           .then(updated => {
+            console.log('updated', updated)
             if(updated) {
               response.status(201).json(updated)
             } else {
@@ -168,7 +169,7 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
     })
 })
 
-//Nathan
+//done
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const {id} = request.params;
   database('palettes').where('id', id).select()
