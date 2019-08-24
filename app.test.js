@@ -12,11 +12,25 @@ describe('API', () => {
   })
   describe('Get /api/v1/projects', () => {
     it('should return a status of 200 and all of the projects', async () => {
-      const expectedProjects = await database('projects').select();
+      const expectedPalettes = await database('projects').select();
       const response = await request(app).get('/api/v1/projects')
       const projects = response.body
       expect(response.status).toBe(200);
       expect(projects[0].name).toEqual('test 1')
+    })
+  })
+
+  describe('GET /api/v1/palettes', () => {
+    it('Should return all palettes and 200 status', async () => {
+      const expectedPalettes = await database('palettes').select('name', 'id', 'project_id')
+      const response = await request(app).get('/api/v1/palettes')
+      const returnedPalettes = response.body.map(palette => (
+        { name: palette.name,
+          id: palette.id,
+          project_id: palette.project_id 
+        }))
+      expect(response.status).toBe(200)
+      expect(returnedPalettes).toEqual(expectedPalettes)
     })
   })
 
