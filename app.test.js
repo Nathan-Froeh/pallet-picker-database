@@ -131,6 +131,15 @@ describe('API', () => {
       expect(response.status).toBe(201)
       expect(response.body).toEqual(1)
     })
+
+    it('SAD PATH: should return status 404 and does not exist message', async () => {
+      const updatedProject = {name: 'Updated test 1'}
+      const expectedId = await database('projects').select('id')
+        .then(project => project[0].id + 1)
+      const response = await request(app).patch(`/api/v1/projects/${expectedId}`).send(updatedProject)
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual(`id ${expectedId} does not exist`)
+    })
   })
 
   // describe('PATCH /api/v1/palettes/:id', () => {
