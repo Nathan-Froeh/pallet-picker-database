@@ -170,7 +170,12 @@ describe('API', () => {
       expect(response.status).toBe(204)
     })
 
-    
+    it('SAD PATH: should return 404 status', async () => {
+      const paletteId = await database('palettes').select()
+        .then(palette => palette[0].id - 1 )
+      const response = await request(app).delete(`/api/v1/palettes/${paletteId}`)
+      expect(response.status).toBe(404)
+    })
   })
 
   describe('DELETE /api/v1/projects/:id', () => {
