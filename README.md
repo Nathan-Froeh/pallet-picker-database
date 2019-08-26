@@ -6,7 +6,7 @@ This was a two week paired project where we built a backend for a user to create
 
 [Nathan Froehlich](https://github.com/Nathan-Froeh)
 
-Colby Allen 
+[Colby Allen](https://github.com/colbyallen012)
 
 ## Built With
 
