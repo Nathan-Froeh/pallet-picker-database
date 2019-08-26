@@ -1,5 +1,23 @@
 # Palette Picker
 
+This was a two week paired project where we built a backend for a user to create projects and color palettes. THe front e nd hasa random color generator and the user can create new project folders, and add new palettes to specific folders. The user can add projects and palettes, delete projects and palettes, and edit existing projects and palettes.
+
+## Created By
+
+(Nathan Froehlich){https://github.com/Nathan-Froeh} 
+
+Colby Allen 
+
+## Built With
+
+Express.js
+
+Knex
+
+PostgreSQL
+
+Deployed to Heroku
+
 ## Endpoints
 
 URL|Verb|Options|Sample Response
