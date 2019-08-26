@@ -4,7 +4,7 @@ This was a two week paired project where we built a backend for a user to create
 
 ## Created By
 
-{Nathan Froehlich}(https://github.com/Nathan-Froeh)
+(Nathan Froehlich)[https://github.com/Nathan-Froeh]
 
 Colby Allen 
 
