@@ -2,15 +2,18 @@
 
 ## Endpoints
 
+URL|Verb|Options|Sample Response
+---|---|---|---
+`http://localhost3001/api/v1/projects` | Not needed | Array of all existing projects `{projectId: 1, name: Project 1}`
+`http://localhost3001/api/v1/palettes` | Not needed | Array of all existing palettes `{"project_id": 6, "name": "palette 1", "color_1": "#31393C", "color_2": "#2176FF", "color_3": "#33A1FD", "color_4": "#FDCA40", "color_5": "#F79824", "project_name": "test 2"}`
+
 ### GET requests
 
 All GET requests return an array of objects
 
-Return all project
-http://localhost3001/api/v1/projects
 
 Return all palettes regardless of which project they fall under
-http://localhost3001/api/v1/palettes
+
 
 Return all palettes for a specified project by project id
 http://localhost3001/api/v1/projects/:id/palettes
