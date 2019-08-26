@@ -4,7 +4,7 @@
 
 URL|Verb|Options|Sample Response
 ---|---|---|---
-`http://localhost3001/api/v1/projects` | GET | Not needed | Array of all existing projects `{"project_id": 1, "name": Project 1}`
+`http://localhost3001/api/v1/projects`| GET | Not needed | Array of all existing projects `{"project_id": 1, "name": Project 1}`
 `http://localhost3001/api/v1/palettes` | GET | Not needed | Array of all existing palettes `{"project_id": 6, "name": "palette 1", "color_1": "#31393C", "color_2": "#2176FF", "color_3": "#33A1FD", "color_4": "#FDCA40", "color_5": "#F79824", "project_name": "test 2"}`
 `http://localhost3001/api/v1/projects/:id/palettes` | GET | Not neeed | Array of all existing `{"project_id": 6, "name": "palette 1", "color_1": "#31393C", "color_2": "#2176FF", "color_3": "#33A1FD", "color_4": "#FDCA40", "color_5": "#F79824", "project_name": "test 2"}`
 `http://localhost3001/api/v1/projects/:id` | GET | Not needed | Single project by id `{"project_id": 1, "name": Project 1}`
