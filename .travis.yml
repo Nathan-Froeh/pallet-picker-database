@@ -7,11 +7,11 @@ before_script:
 - knex migrate:latest --env=test
 - knex seed:run --env=test
 notifications:
-  email: false
+email: false
 deploy:
-  provider: heroku
-  api_key:
-    secure: dV9iDW7A39Ro6MgCtB6anVSA2tB8ydKwUoggw+9t7gy6Z/fofpB9W09kr+vp3/qu3wjCGbhVHh0Rk++iAgyWtqrTuHiaBEzpAhyssP1Mya4pOVE26aqg5cVH5ATd6i1Pya7s67cZ4wN51tf4UPV13J4H/w7YgEt89OtaCQJbSsE9JSBk7Ts6TxlZ5/DDRvgj7DjXix6rohuI3TdhDLPIMpvjsO3FFSKrwRUX/YKnZNApd26r82qflObfbSOOr4ltq45WWG/JoCW//8kQSyo6wQz34NumZnfGBW7S9kksUt3QMAQlJvEGw1jm7qleMFzaY3uk2ruArPga8aAp6LYJy5b+T/TnMbC3GboYtByac4aMt2W+j80ZIw+/Fpy3nYnMPpMp7hxQe1jX0VgxFiMsh9z/653Z3gmDqVsAr/aF5jUeqHL7QNOsZ+Q1TgNe2XNv+DhmfJl+GnWahgsZqcA+OG9nWr0QoIqU51/oEi9pA1zkdc2c+fTcy3WNvQ7uSMPpWUnRYh1Qv6IWJFHWISp1QgW8tUlmbv2xz2KjaRYBbASUmuUCaLicwBnLF6XQgc+ri2g7C+gvSS5rEGBjgZfmAr5CYU9L28T7x1Dz8ozWdj7/Z3JhTkfN/MnWxd4FyUWULisDYmtPLy2T2od7huZ8Y1+k+ycBSEVTyY4iEjfZadU=
-  app: the-palette-picker
-    skip_cleanup: true
+provider: heroku
+api_key:
+secure: dV9iDW7A39Ro6MgCtB6anVSA2tB8ydKwUoggw+9t7gy6Z/fofpB9W09kr+vp3/qu3wjCGbhVHh0Rk++iAgyWtqrTuHiaBEzpAhyssP1Mya4pOVE26aqg5cVH5ATd6i1Pya7s67cZ4wN51tf4UPV13J4H/w7YgEt89OtaCQJbSsE9JSBk7Ts6TxlZ5/DDRvgj7DjXix6rohuI3TdhDLPIMpvjsO3FFSKrwRUX/YKnZNApd26r82qflObfbSOOr4ltq45WWG/JoCW//8kQSyo6wQz34NumZnfGBW7S9kksUt3QMAQlJvEGw1jm7qleMFzaY3uk2ruArPga8aAp6LYJy5b+T/TnMbC3GboYtByac4aMt2W+j80ZIw+/Fpy3nYnMPpMp7hxQe1jX0VgxFiMsh9z/653Z3gmDqVsAr/aF5jUeqHL7QNOsZ+Q1TgNe2XNv+DhmfJl+GnWahgsZqcA+OG9nWr0QoIqU51/oEi9pA1zkdc2c+fTcy3WNvQ7uSMPpWUnRYh1Qv6IWJFHWISp1QgW8tUlmbv2xz2KjaRYBbASUmuUCaLicwBnLF6XQgc+ri2g7C+gvSS5rEGBjgZfmAr5CYU9L28T7x1Dz8ozWdj7/Z3JhTkfN/MnWxd4FyUWULisDYmtPLy2T2od7huZ8Y1+k+ycBSEVTyY4iEjfZadU=
+app: the-palette-picker
+skip_cleanup: true
 
