@@ -66,7 +66,7 @@ app.post('/api/v1/projects', (request, response) => {
     if(!project[requiredParameter]) {
       return response
         .status(422)
-        .send({error: `Expected format: {name: <String>}. You're missing a ${requiredParameter} property.`})
+        .send({error: `Expected format: {name: <String>}. You're missing the ${requiredParameter} property.`})
     }
   }
   database('projects').where('name', project.name).select()
