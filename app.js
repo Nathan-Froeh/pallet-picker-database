@@ -13,22 +13,19 @@ app.locals.title = 'Palette Picker Database';
 
 app.get('/', (request, response) => {
 });
-//done
+
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
     .then(projects => response.status(200).json(projects))
     .catch(error => response.status(500).json({error}))
 });
 
-//TEST //done
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes').select()
     .then(palettes => response.status(200).json(palettes))
     .catch(error => response.status(500).json({error}))
 });
-//TEST
 
-//Colby 
 app.get('/api/v1/projects/:id/palettes', (request, response) => {
   const {id} = request.params;
   database('palettes').where('project_id', id).select()
@@ -36,7 +33,6 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//done
 app.get('/api/v1/projects/:id', (request, response) => {
   database('projects').where('id', request.params.id).select()
     .then(project => {
@@ -50,7 +46,7 @@ app.get('/api/v1/projects/:id', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//Colby
+//in the works
 app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
     .then(palette => {
@@ -64,7 +60,6 @@ app.get('/api/v1/palettes/:id', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-//done
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
   for(let requiredParameter of ['name']) {
@@ -86,7 +81,6 @@ app.post('/api/v1/projects', (request, response) => {
     })
 });
 
-//Colby
 app.post('/api/v1/palettes', (request, response) => {
   const palette = request.body;
   for(let requiredParameter of ['project_name', 'name', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
@@ -122,7 +116,6 @@ app.post('/api/v1/palettes', (request, response) => {
     })
 });
 
-//done
 app.patch('/api/v1/projects/:id', (request, response) => {
   const name = request.body.name;
   const id = request.params.id;
@@ -145,12 +138,9 @@ app.patch('/api/v1/projects/:id', (request, response) => {
     })
 });
 
-//Colby
 app.patch('/api/v1/palettes/:id', (request, response) => {
   const {name, color_1, color_2, color_3, color_4, color_5, project_id} = request.body;
   const paletteId = request.params.id;
-  //get all palette names from project_id
-  // if new name is unique then update
   database('palettes').where('project_id', project_id).select('name', 'id')
     .then(existingPalettes => {
       const matchingName = existingPalettes.find(existingPalette => {
@@ -169,7 +159,6 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
     })
 })
 
-//done
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const {id} = request.params;
   database('palettes').where('id', id).select()
@@ -184,7 +173,6 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
     })
 })
 
-//Colby
 app.delete('/api/v1/projects/:id', (request, response) => {
   const {id} = request.params;
   database('projects').where('id', id).select()
@@ -203,13 +191,11 @@ app.delete('/api/v1/projects/:id', (request, response) => {
     })
 })
 
-//Nathan
 app.get('/api/v1/specificPalette', (request, response) => {
   const color = request.query.hexcode
-  console.log(color)
   database('palettes').where('color_1',color).orWhere('color_2',color).orWhere('color_3',color).orWhere('color_4',color).orWhere('color_5',color).select()
     .then(palettes => {
-      if(response.length){
+      if(palettes.length){
         response.status(200).json(palettes)
       } else {
         response.status(404).json('Hexcolor not found')
