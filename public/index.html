@@ -1,9 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <body>
-      <h1>Palette Picker Database</h1>
-      <p>docs</p>
-    </body>
+      <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
+    <body>
+      <header>
+        <h1>Palette Picker Database</h1>
+        <h3>Built by: Nathan Froehlich & Colby Allen</h3>
+        <a class="git-hub" target="_blank" href="https://github.com/Nathan-Froeh/pallet-picker-database">Github Repo</a>
+      </header>
+      <main>
+        <p>
+          This RESTful API was built to allow users to generate a random color palette and then add those palettes to project folders that they have created.
+        </p>
+        <h2>End Points</h2>
+        <table class='endpoints'>
+          <tbody>
+            <tr>
+              <td><h3>URL</h3></td>
+              <td><h3>Verb</h3></td>
+              <td><h3>Options</h3></td>
+              <td><h3>Sample Response</h3></td>
+            </tr>
+            <tr>
+              <td>http://localhost3001/api/v1/projects</td>
+              <td>'Get'</td>
+              <td>'Not Needed'</td>
+              <td>
+                <strong>Array of all existing projects:</strong>
+                [{</br><strong>id: </strong> 1,</br><strong>name: </strong>First Project</br>}]
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </body>
 </html>

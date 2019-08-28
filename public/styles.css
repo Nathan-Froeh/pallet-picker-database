@@ -1,0 +1,12 @@
+body {
+  text-align: center;
+}
+
+.endpoints {
+  margin: auto;
+  border: 2px solid black;
+}
+
+td {
+  padding: 10px;
+}
