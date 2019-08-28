@@ -5,6 +5,11 @@ body {
 .endpoints {
   margin: auto;
   border: 2px solid black;
+  width: 90%;
+}
+
+tr {
+  border: 2px solid black;
 }
 
 td {
