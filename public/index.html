@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/projects</td>
-              <td>'Get'</td>
+              <td>Get</td>
               <td>'Not Needed'</td>
               <td>
                 <strong>Array of all existing projects:</strong>
@@ -50,74 +50,51 @@
               </td>
             </tr>
             <tr>
-              <td>http://localhost3001/api/v1/projects/:id<td>
-              <td>Get</td>
+              <td>http://localhost3001/api/v1/projects/:id<td>       <td>Get</td>
               <td>Not Needed</td>
-              <td>
-                <strong>One specific project: </strong>
-                [{</br><strong>id: </strong> 1,</br><strong>name: </strong>First Project</br>}]
-              </td>
+              <td><strong>One specific project: </strong>[{</br><strong>id: </strong> 1,</br><strong>name: </strong>First Project</br>}]</td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/palettes/:id<td>
               <td>Get</td>
               <td>Not Needed</td>
-              <td>
-                <strong>One specific palette: </strong>
-                [{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]
-              </td>
+              <td><strong>One specific palette: </strong>[{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]</td>
             </tr> 
             <tr>
               <td>http://localhost3001/api/v1/projects<td>
               <td>Post</td>
               <td><strong>Name: </strong>string</td>
-              <td>
-                <strong>New Project: </strong>
-                [{</br><strong>project_id: </strong> 2,</br><strong>name: </strong>Project 2</br>}]
-              </td>
+              <td><strong>New Project: </strong>[{</br><strong>project_id: </strong> 2,</br><strong>name: </strong>Project 2</br>}]</td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/palettes<td>
               <td>Post</td>
               <td><strong>Name: </strong>string</br><strong>color_1: </strong>string</br><strong>color_2: </strong>string</br><strong>color_3: </strong></br><strong>color_4: </strong>string</br><strong>color_5</strong></br>string</td>
-              <td>
-                <strong>New Palette: </strong>
-                [{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]
-              </td>
+              <td><strong>New Palette: </strong>[{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]</td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/projects/:id<td>
               <td>Patch</td>
               <td><strong>Name: </strong>string</td>
-              <td>
-                <strong>Updated Project: </strong>
-                [{</br><strong>project_id: </strong> 2,</br><strong>name: </strong>Project 2</br>}]
-              </td>
+              <td><strong>Updated Project: </strong>[{</br><strong>project_id: </strong> 2,</br><strong>name: </strong>Project 2</br>}]</td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/palettes/:id<td>
               <td>Patch</td>
               <td><strong>Name: </strong>string</br><strong>color_1:</strong>string</br><strong>color_2: </strong>string</br><strong>color_3: </strong></br><strong>color_4: </strong>string</br><strong>color_5</strong></br>string</td>
-              <td>
-                <strong>New Palette: </strong>
-                [{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]
-              </td>
+              <td><strong>New Palette: </strong>[{</br><strong>project_id: </strong> 1,</br><strong>name: </strong>Green Palette</br><strong>color_1: </strong> #31393C</br><strong>color_2: </strong>#2176FF</br><strong>color_3: </strong>#33A1FD</br><strong>color_4: </strong>#FDCA40</br><strong>color_5: </strong>#F79824</br><strong>project_name: </strong></br>First Project</br>}]</td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/projects/:id<td>
               <td>Delete</td>
               <td>Not Needed</td>
-              <td>
-                <strong>Status code of '204' and string of which project was deleted </strong>
-              </td>
+              <td><strong>Status code of '204' and string of which project was deleted </strong></td>
             </tr>
             <tr>
               <td>http://localhost3001/api/v1/palettes/:id<td>
               <td>Delete</td>
               <td>Not Needed</td>
-              <td>
-                <strong>Status code of '204' and string of which palette was deleted </strong>
-              </td>
+              <td><strong>Status code of '204' and string of which palette was deleted </strong></td>
             </tr>                                          
           </tbody>
         </table>
