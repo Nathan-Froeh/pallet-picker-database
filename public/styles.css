@@ -3,13 +3,13 @@ body {
 }
 
 .endpoints {
+  border-collapse: collapse;
   margin: auto;
   width: 90%;
 }
 
-.endpoints, td {
-  border-collapse: collapse;
-  border-bottom: 2px solid black;
+.endpoints, td, th {
+  border: 2px solid black;
 }
 
 td {
